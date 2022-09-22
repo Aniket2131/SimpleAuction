@@ -46,7 +46,7 @@ contract openAuction {
     //function for those bidders with less bids then the highest bids which are stored in  the mapping.
     function withdraw() external payable returns(bool) {
         uint amount = previousBidder[msg.sender];
-
+        require(block.timestamp >= auctionEndTime, "The auction is not ended yet!");
         if(amount > 0) previousBidder[msg.sender] = 0; //So that one bidder can withdraw his money once. 
 
         if(!payable(msg.sender).send(amount)) //For those who did not placed any bid but still trying to withdraw money.
